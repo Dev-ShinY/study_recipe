@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import Chips from "@/components/chips";
 
 export default function Home() {
   return (
@@ -14,6 +15,8 @@ export default function Home() {
           음식을 준비하는 과정을 얘기해요
         </p>
       </div>
+
+      <Chips />
     </main>
   );
 }
