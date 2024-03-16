@@ -6,6 +6,7 @@ import { getRecipe } from "@/api/getRecipe";
 import { fetchRecipeType, recipeItemType } from "@/types/Recipe";
 import Image from "next/image";
 import IngredientsExpand from "./ingredients-expand";
+import Recipe from "./recipe";
 
 export default function RecipeList({
   ingredients,
@@ -17,26 +18,33 @@ export default function RecipeList({
   end: number;
 }) {
   const [listItem, setListItem] = useState<recipeItemType[] | null>(null);
+  const [recipeItem, setRecipeItem] = useState<recipeItemType | null>(null);
   const [listItemTotal, setListItemTotal] = useState<number>(0);
   const [recipeIndex, setRecipeIndex] = useState<number>(0);
 
   const fetchRecipe = useCallback(async () => {
     try {
-      const res: fetchRecipeType = await getRecipe(ingredients, start, end);
+      const res: fetchRecipeType = await getRecipe(
+        ingredients,
+        recipeIndex * 5,
+        recipeIndex * 5 + 5
+      );
+      console.log(res);
+
       setListItem(res[0]);
       setListItemTotal(res[1]);
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  }, [recipeIndex]);
 
   useEffect(() => {
     fetchRecipe();
-  }, []);
+  }, [recipeIndex]);
 
   return (
-    <div className={clsx("p-5", "bg-white")}>
-      <ul>
+    <section className={clsx("bg-white", "w-full")}>
+      <ul className={clsx("p-5", "w-full")}>
         {listItem &&
           listItem.map((item, index) => {
             return (
@@ -47,7 +55,9 @@ export default function RecipeList({
                   "flex",
                   "border-b",
                   "border-gray-100",
-                  "py-5"
+                  "py-5",
+                  "w-full",
+                  "cursor-pointer"
                 )}
               >
                 <Image
@@ -56,9 +66,13 @@ export default function RecipeList({
                   width={130}
                   height={130}
                   className={clsx("rounded-lg", "mr-5", "max-h-[130px]")}
+                  onClick={() => setRecipeItem(item)}
                 />
                 <div>
-                  <p className={clsx("flex", "justify-between")}>
+                  <p
+                    className={clsx("flex", "justify-between")}
+                    onClick={() => setRecipeItem(item)}
+                  >
                     {item.RCP_NM}
                     <span
                       className={clsx(
@@ -86,6 +100,7 @@ export default function RecipeList({
             );
           })}
       </ul>
-    </div>
+      <Recipe recipeItem={recipeItem} setRecipeItem={setRecipeItem} />
+    </section>
   );
 }

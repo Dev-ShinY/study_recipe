@@ -7,6 +7,7 @@ export default function Header() {
         "border-b",
         "border-gray-300",
         "p-4",
+        "h-16",
         "w-full",
         "sticky",
         "top-0",
