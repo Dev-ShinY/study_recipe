@@ -7,6 +7,7 @@ import { fetchRecipeType, recipeItemType } from "@/types/Recipe";
 import Image from "next/image";
 import IngredientsExpand from "./ingredients-expand";
 import Recipe from "./recipe";
+import Pagination from "../../../../components/pagination";
 
 export default function RecipeList({
   ingredients,
@@ -101,6 +102,13 @@ export default function RecipeList({
           })}
       </ul>
       <Recipe recipeItem={recipeItem} setRecipeItem={setRecipeItem} />
+
+      {/* Pagination */}
+      <Pagination
+        index={recipeIndex}
+        setIndex={setRecipeIndex}
+        maxNum={listItemTotal}
+      />
     </section>
   );
 }

@@ -6,9 +6,10 @@ export const getRecipe = async (
   end: number
 ) => {
   const apiUrl = process.env.NEXT_PUBLIC_RECIPE_API_URL;
+  const apiKey = process.env.NEXT_PUBLIC_RECIPE_API_KEY;
 
   return new Promise<fetchRecipeType>((resolve, reject) => {
-    const url = `${apiUrl}/${start}/${end}/RCP_PARTS_DTLS=${ingredients}`;
+    const url = `${apiUrl}/${apiKey}/COOKRCP01/json/${start}/${end}/RCP_PARTS_DTLS=${ingredients}`;
 
     fetch(url)
       .then((response) => response.json())
