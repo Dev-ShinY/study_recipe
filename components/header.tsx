@@ -16,7 +16,8 @@ export default function Header() {
         "items-center",
         "font-bold",
         "text-gray-800",
-        "bg-white"
+        "bg-white",
+        "z-10"
       )}
     >
       냉파 : 냉장고 파먹기

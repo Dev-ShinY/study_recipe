@@ -9,31 +9,25 @@ import IngredientsExpand from "./ingredients-expand";
 import Recipe from "./recipe";
 import Pagination from "../../../../components/pagination";
 
-export default function RecipeList({
-  ingredients,
-  start,
-  end,
-}: {
-  ingredients: string;
-  start: number;
-  end: number;
-}) {
+export default function RecipeList({ ingredients }: { ingredients: string }) {
+  const [loading, setLoading] = useState<Boolean>(false);
   const [listItem, setListItem] = useState<recipeItemType[] | null>(null);
   const [recipeItem, setRecipeItem] = useState<recipeItemType | null>(null);
   const [listItemTotal, setListItemTotal] = useState<number>(0);
   const [recipeIndex, setRecipeIndex] = useState<number>(0);
 
   const fetchRecipe = useCallback(async () => {
+    setLoading(true);
+
     try {
       const res: fetchRecipeType = await getRecipe(
         ingredients,
-        recipeIndex * 5,
-        recipeIndex * 5 + 5
+        recipeIndex * 6 + 1,
+        recipeIndex * 6 + 6
       );
-      console.log(res);
-
       setListItem(res[0]);
       setListItemTotal(res[1]);
+      setLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -44,62 +38,83 @@ export default function RecipeList({
   }, [recipeIndex]);
 
   return (
-    <section className={clsx("bg-white", "w-full")}>
-      <ul className={clsx("p-5", "w-full")}>
-        {listItem &&
-          listItem.map((item, index) => {
-            return (
-              <li
-                key={item.RCP_NM}
-                className={clsx(
-                  "my-5",
-                  "flex",
-                  "border-b",
-                  "border-gray-100",
-                  "py-5",
-                  "w-full",
-                  "cursor-pointer"
-                )}
-              >
-                <Image
-                  src={item.ATT_FILE_NO_MAIN}
-                  alt={item.RCP_NA_TIP}
-                  width={130}
-                  height={130}
-                  className={clsx("rounded-lg", "mr-5", "max-h-[130px]")}
-                  onClick={() => setRecipeItem(item)}
-                />
-                <div>
-                  <p
-                    className={clsx("flex", "justify-between")}
+    <section className={clsx("bg-white", "lg:w-[1024px]", "w-full")}>
+      <p className={clsx("px-10", "mt-5", "text-gray-700")}>
+        <b>{listItemTotal}</b> 개의 레시피를 찾았어요
+      </p>
+      <ul
+        className={clsx(
+          "p-5",
+          "w-full",
+          "grid",
+          "grid-cols-1",
+          "md:grid-cols-2",
+          "lg:grid-cols-3"
+        )}
+      >
+        {listItem && !loading
+          ? listItem.map((item, index) => {
+              return (
+                <li
+                  key={index}
+                  className={clsx(
+                    "py-5",
+                    "md:mx-5",
+                    "cursor-pointer",
+                    "flex",
+                    "flex-col",
+                    "items-center"
+                  )}
+                >
+                  <Image
+                    src={item.ATT_FILE_NO_MAIN}
+                    alt={item.RCP_NM}
+                    width={300}
+                    height={300}
+                    className={clsx(
+                      "rounded-2xl",
+                      "shadow-xl",
+                      "h-[260px]",
+                      "object-cover"
+                    )}
                     onClick={() => setRecipeItem(item)}
-                  >
-                    {item.RCP_NM}
-                    <span
+                  />
+                  <div className={clsx("text-left", "w-[300px]")}>
+                    <p
                       className={clsx(
-                        "bg-main-custom-b",
-                        "rounded-full",
-                        "flex",
-                        "items-center",
-                        "justify-center",
-                        "text-xs",
-                        "block",
-                        "p-1",
-                        "ml-2",
-                        "min-w-10",
-                        "h-fit"
+                        "font-bold",
+                        "text-gray-600",
+                        "text-lg",
+                        "mt-4"
                       )}
+                      onClick={() => setRecipeItem(item)}
                     >
-                      {item.RCP_WAY2}
-                    </span>
-                  </p>
-                  <div className={clsx("text-xs", "text-gray-500", "mt-4")}>
-                    <IngredientsExpand ingredient={item.RCP_PARTS_DTLS} />
+                      {item.RCP_NM}
+                    </p>
+                    <div className={clsx("text-xs", "text-gray-400")}>
+                      <IngredientsExpand ingredient={item.RCP_PARTS_DTLS} />
+                    </div>
                   </div>
-                </div>
+                </li>
+              );
+            })
+          : [0, 1, 2, 3, 4, 5].map((i) => (
+              <li
+                key={i}
+                className={clsx("animate-pulse", "py-5", "md:mx-5", "m-auto")}
+              >
+                <div
+                  className={clsx(
+                    "h-[260px]",
+                    "w-[260px]",
+                    "rounded-2xl",
+                    "bg-slate-200"
+                  )}
+                />
+                <div className={clsx("h-5", "w-3/5", "mt-4", "bg-slate-200")} />
+                <div className={clsx("h-8", "w-2/5", "mt-4", "bg-slate-200")} />
               </li>
-            );
-          })}
+            ))}
       </ul>
       <Recipe recipeItem={recipeItem} setRecipeItem={setRecipeItem} />
 

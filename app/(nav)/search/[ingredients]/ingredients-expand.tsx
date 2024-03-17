@@ -19,7 +19,8 @@ export default function IngredientsExpand({
           "overflow-hidden",
           "duration-300",
           "ease-in-out",
-          expanded ? "max-h-screen" : "max-h-20"
+          expanded ? "max-h-screen" : "max-h-20",
+          !expanded ? "flex" : ""
         )}
       >
         {ingredient
@@ -27,16 +28,9 @@ export default function IngredientsExpand({
           .filter((item) => item.trim() !== "")
           .slice(0, expanded ? undefined : 3)
           .map((item, index) => (
-            <p
-              key={index}
-              className={
-                ["주재료", "소스", "드레싱", "구운채소"].includes(item.trim())
-                  ? "font-bold my-1"
-                  : ""
-              }
-            >
-              {item} <br />
-            </p>
+            <span key={index} className={clsx("mr-2")}>
+              #{item.split(/[(]/)[0].trim()} <br />
+            </span>
           ))}
       </div>
       <button onClick={handleClick} className={clsx("text-blue-500", "my-1")}>

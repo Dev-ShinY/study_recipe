@@ -13,12 +13,14 @@ export default function Pagination({
   const PAGE_RANGE = 2;
 
   return (
-    <div className={clsx("flex", "justify-center", "mb-10")}>
+    <div
+      className={clsx("flex", "justify-evenly", "md:justify-center", "mb-10")}
+    >
       {Array.from(
         { length: PAGE_RANGE * 2 + 1 },
         (_, i) => index - PAGE_RANGE + i
       ).map((item) => {
-        if (item >= 0 && item < maxNum / 5) {
+        if (item >= 0 && item < maxNum / 6) {
           return (
             <button
               className={clsx(
@@ -32,7 +34,6 @@ export default function Pagination({
                 "justify-center",
                 "items-center",
                 "md:mx-5",
-                "mx-1",
                 "cursor-pointer"
               )}
               onClick={() => setIndex(item)}

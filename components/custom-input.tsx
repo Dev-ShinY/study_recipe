@@ -39,6 +39,7 @@ export default function CustomInput({
       className={clsx(
         "border-2",
         "rounded-full",
+        "lg:w-[1024px]",
         "w-full",
         "px-4",
         "py-3",

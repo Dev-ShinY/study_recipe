@@ -18,6 +18,7 @@ export default function Chips() {
   const SearchButton: React.FC<{ active: boolean }> = ({ active }) => (
     <button
       className={clsx(
+        "lg:w-[1024px]",
         "w-full",
         "h-10",
         "text-white",
@@ -43,7 +44,15 @@ export default function Chips() {
         onChange={handleChange}
       />
 
-      <ul className={clsx("flex", "items-start", "w-full", "flex-wrap")}>
+      <ul
+        className={clsx(
+          "flex",
+          "items-start",
+          "lg:w-[1024px]",
+          "w-full",
+          "flex-wrap"
+        )}
+      >
         {values.map((value, index) => (
           <li
             className={clsx(
