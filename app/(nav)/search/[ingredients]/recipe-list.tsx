@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import { getRecipe } from "@/api/getRecipe";
-import { fetchRecipeType, recipeItemType } from "@/types/Recipe";
+import { fetchRecipeType, recipeItemType } from "@/types/recipe";
 import Image from "next/image";
 import IngredientsExpand from "./ingredients-expand";
 import Recipe from "./recipe";

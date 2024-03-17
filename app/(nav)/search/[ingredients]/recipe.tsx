@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { recipeItemType } from "@/types/Recipe";
+import { recipeItemType } from "@/types/recipe";
 import Image from "next/image";
 
 export default function Recipe({

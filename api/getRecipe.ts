@@ -1,4 +1,4 @@
-import { fetchRecipeType } from "@/types/Recipe";
+import { fetchRecipeType } from "@/types/recipe";
 
 export const getRecipe = async (
   ingredients: string,
